@@ -12,6 +12,8 @@ namespace Grafcreator.Shapes
         protected int strokeWidth;
         protected Point center;
 
+        public bool IsSelected { get; private set; }
+
         public Shape ShapeElement { get; protected set; }
 
         public ShapeBase(Color strokeColor, Color fillColor, int strokeWidth)
@@ -51,12 +53,26 @@ namespace Grafcreator.Shapes
         {
             if (ShapeElement != null)
                 ShapeElement.StrokeDashArray = new DoubleCollection { 4, 2 };
+            IsSelected = true;
         }
 
         public abstract void Draw(Canvas canvas);
         public virtual void Update(Point end)
         {
-            // Реализуется в наследниках
+            //Реализуется в наследниках
+        }
+        public virtual void Unchoose()
+        {
+            if (ShapeElement != null)
+                ShapeElement.StrokeDashArray = null;
+            IsSelected = false;
+        }
+
+        public virtual bool Contains(Point p)
+        {
+            if (ShapeElement == null) return false;
+
+            return ShapeElement.IsMouseOver;
         }
     }
 }

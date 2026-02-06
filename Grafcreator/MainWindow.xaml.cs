@@ -16,14 +16,52 @@ namespace Grafcreator
         private List<ShapeBase> shapes = new List<ShapeBase>();
         private string selectedTool = "Line";
 
+        private ShapeBase selectedShape = null;
+        private bool isDraggingShape = false;
+        private Point lastMousePos;
+
+        private Color currentStroke = Colors.Black;
+        private Color currentFill = Colors.Transparent;
+
+        private enum EditorMode
+        {
+            Draw,
+            Select
+        }
+        private EditorMode currentMode = EditorMode.Draw;
+
         public MainWindow()
         {
             InitializeComponent();
 
-            LineTool.Click += (s, e) => selectedTool = "Line";
-            RectTool.Click += (s, e) => selectedTool = "Rectangle";
-            CircleTool.Click += (s, e) => selectedTool = "Circle";
-            TriangleTool.Click += (s, e) => selectedTool = "Triangle";
+            Chose.Click += (s, e) =>
+            {
+                currentMode = EditorMode.Select;
+            };
+
+            LineTool.Click += (s, e) =>
+            {
+                currentMode = EditorMode.Draw;
+                selectedTool = "Line";
+            };
+
+            RectTool.Click += (s, e) =>
+            {
+                currentMode = EditorMode.Draw;
+                selectedTool = "Rectangle";
+            };
+
+            CircleTool.Click += (s, e) =>
+            {
+                currentMode = EditorMode.Draw;
+                selectedTool = "Circle";
+            };
+
+            TriangleTool.Click += (s, e) =>
+            {
+                currentMode = EditorMode.Draw;
+                selectedTool = "Triangle";
+            };
 
             DrawCanvas.MouseDown += Canvas_MouseDown;
             DrawCanvas.MouseMove += Canvas_MouseMove;
@@ -32,8 +70,26 @@ namespace Grafcreator
 
         private void Canvas_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            Point pos = e.GetPosition(DrawCanvas);
+            if (currentMode == EditorMode.Select)
+            {
+                foreach (var shape in shapes)
+                {
+                    if (shape.Contains(pos))
+                    {
+                        SelectShape(shape);
+                        isDraggingShape = true;
+                        lastMousePos = pos;
+                        return;
+                    }
+                }
+
+                DeselectShape();
+                return;
+            }
+
             isDrawing = true;
-            startPoint = e.GetPosition(DrawCanvas);
+            startPoint = pos;
 
             switch (selectedTool)
             {
@@ -65,14 +121,38 @@ namespace Grafcreator
 
         private void Canvas_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!isDrawing || currentShape == null) return;
+            Point pos = e.GetPosition(DrawCanvas);
 
-            Point end = e.GetPosition(DrawCanvas);
-            currentShape.Update(end);
+            // Перемещение фигуры
+            if (currentMode == EditorMode.Select &&
+                isDraggingShape &&
+                selectedShape != null)
+            {
+                double dx = pos.X - lastMousePos.X;
+                double dy = pos.Y - lastMousePos.Y;
+
+                selectedShape.Move(dx, dy);
+                lastMousePos = pos;
+                return;
+            }
+
+            // Рисование фигуры
+            if (currentMode == EditorMode.Draw &&
+                isDrawing &&
+                currentShape != null)
+            {
+                currentShape.Update(pos);
+            }
         }
 
         private void Canvas_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (currentMode == EditorMode.Select)
+            {
+                isDraggingShape = false;
+                return;
+            }
+
             if (isDrawing && currentShape != null)
             {
                 isDrawing = false;
@@ -81,5 +161,19 @@ namespace Grafcreator
             }
         }
 
+        private void SelectShape(ShapeBase shape)
+        {
+            DeselectShape();
+            selectedShape = shape;
+            selectedShape.Choose();
+        }
+
+        private void DeselectShape()
+        {
+            if (selectedShape != null)
+                selectedShape.Unchoose();
+
+            selectedShape = null;
+        }
     }
 }
