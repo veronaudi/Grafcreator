@@ -39,11 +39,8 @@ namespace Grafcreator.Shapes
 
         public override void Update(Point current)
         {
-            // Простейший вариант: создаем равнобедренный треугольник с вершиной в центре и основанием по текущей позиции
             x2 = (float)current.X;
             y2 = (float)current.Y;
-
-            // Расчет третьей вершины симметрично относительно центра
             x3 = (float)(2 * center.X - current.X);
             y3 = (float)current.Y;
 

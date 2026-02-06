@@ -135,7 +135,7 @@ namespace Grafcreator
             // Рисование фигуры
             if (currentMode == EditorMode.Draw &&
                 isDrawing &&
-                currentShape != null)
+                currentShape!=null)
             {
                 currentShape.Update(pos);
             }

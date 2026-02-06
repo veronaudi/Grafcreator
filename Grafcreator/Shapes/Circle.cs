@@ -13,16 +13,16 @@ namespace Grafcreator.Shapes
         public Circle(Point center, double radius, Color strokeColor, Color fillColor, int strokeWidth)
             : base(strokeColor, fillColor, strokeWidth)
         {
-            this.center = center;
-            this.radius = radius;
+            this.center=center;
+            this.radius=radius;
         }
 
         public override void Draw(Canvas canvas)
         {
             var ellipse = new Ellipse
             {
-                Width = radius * 2,
-                Height = radius * 2,
+                Width = radius*2,
+                Height = radius*2,
                 Stroke = new SolidColorBrush(colorStroke),
                 Fill = new SolidColorBrush(colorFill),
                 StrokeThickness = strokeWidth
@@ -39,8 +39,8 @@ namespace Grafcreator.Shapes
 
             if (ShapeElement is Ellipse ellipse)
             {
-                ellipse.Width = radius * 2;
-                ellipse.Height = radius * 2;
+                ellipse.Width = radius*2;
+                ellipse.Height = radius*2;
                 Canvas.SetLeft(ellipse, center.X - radius);
                 Canvas.SetTop(ellipse, center.Y - radius);
             }
