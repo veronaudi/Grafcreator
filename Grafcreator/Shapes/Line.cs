@@ -48,5 +48,20 @@ namespace Grafcreator.Shapes
                 line.Y2 = endY;
             }
         }
+
+        public override void Move(double dx, double dy)
+        {
+            center = new Point(center.X + dx, center.Y + dy);
+            endX += (float)dx;
+            endY += (float)dy;
+
+            if (ShapeElement is System.Windows.Shapes.Line line)
+            {
+                line.X1 = center.X;
+                line.Y1 = center.Y;
+                line.X2 = endX;
+                line.Y2 = endY;
+            }
+        }
     }
 }

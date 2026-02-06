@@ -109,12 +109,8 @@ namespace Grafcreator
 
             if (currentShape != null)
             {
-             
-                currentShape.Color(Colors.Black, Colors.Transparent);
 
-                // SetStrokeWidth
-                // currentShape.SetStrokeWidth(2);
-
+                currentShape.Color(currentStroke, currentFill);
                 currentShape.Draw(DrawCanvas);
             }
         }
@@ -174,6 +170,23 @@ namespace Grafcreator
                 selectedShape.Unchoose();
 
             selectedShape = null;
+        }
+
+        private void Delete_Click(object sender, RoutedEventArgs e)
+        {
+            if (selectedShape == null)
+                return;
+
+            selectedShape.Delete(DrawCanvas);
+            shapes.Remove(selectedShape);
+            selectedShape = null;
+        }
+        private void Color_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Background is SolidColorBrush brush)
+            {
+                currentFill = brush.Color;
+            }
         }
     }
 }

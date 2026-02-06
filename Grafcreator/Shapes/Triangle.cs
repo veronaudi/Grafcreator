@@ -55,5 +55,21 @@ namespace Grafcreator.Shapes
                 triangle.Points.Add(new Point(x3, y3));
             }
         }
+        public override void Move(double dx, double dy)
+        {
+            center = new Point(center.X + dx, center.Y + dy);
+            x2 += (float)dx;
+            y2 += (float)dy;
+            x3 += (float)dx;
+            y3 += (float)dy;
+
+            if (ShapeElement is Polygon triangle)
+            {
+                triangle.Points.Clear();
+                triangle.Points.Add(center);
+                triangle.Points.Add(new Point(x2, y2));
+                triangle.Points.Add(new Point(x3, y3));
+            }
+        }
     }
 }

@@ -29,6 +29,25 @@
                     Margin="5" Height="40" Background="#fee8eb" BorderBrush="#81566a" BorderThickness="1.5"/>
             <Button Name="Chose" Content="✥" FontSize="18"
                     Margin="5" Height="40" Background="#fee8eb" BorderBrush="#81566a" BorderThickness="1.5"/>
+            <Button Name="Delete" Content="X" FontSize="18" Click="Delete_Click"
+                    Margin="5" Height="40" Background="#fee8eb" BorderBrush="#81566a" BorderThickness="1.5"/>
+        </StackPanel>
+
+        <!-- Цветовая палитра -->
+        <StackPanel Grid.Column="1"
+            Orientation="Horizontal"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Bottom"
+            Margin="10,0,10,10">
+            <!-- Пример кнопок для цветов -->
+            <Button Width="25" Height="25" Background="Black" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="White" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="Red" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="Green" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="Blue" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="Yellow" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="Purple" Click="Color_Click"/>
+            <Button Width="25" Height="25" Background="Orange" Click="Color_Click"/>
         </StackPanel>
 
         <StackPanel Grid.Column="0"
