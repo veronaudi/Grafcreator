@@ -37,7 +37,7 @@
                 Grid.Column="1"
                 Background="White"
                 Margin="10,10,10,118"
-                />
+                ClipToBounds="True"/>
 
     </Grid>
 </Window>

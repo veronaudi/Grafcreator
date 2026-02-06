@@ -80,5 +80,6 @@ namespace Grafcreator
                 currentShape = null;
             }
         }
+
     }
 }
